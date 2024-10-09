@@ -1,0 +1,84 @@
+
+{
+    "$schema": "https://aka.ms/winget-packages.schema.2.0.json",
+    "CreationDate": "2022-05-05T14:50:05.640-00:00",
+    "Sources": [
+      {
+        "Packages": [
+          {
+            "PackageIdentifier": "Microsoft.PowerShell.Preview"
+          },
+          {
+            "PackageIdentifier": "Microsoft.WindowsTerminal"
+          },
+          {
+            "PackageIdentifier": "Microsoft.VisualStudioCode"
+          },
+          {
+            "PackageIdentifier": "JanDeDobbeleer.OhMyPosh"
+          },
+          {
+            "PackageIdentifier": "Git.Git"
+          },
+          {
+            "PackageIdentifier": "Microsoft.VisualStudio.2022.Community.Preview"
+          },
+          {
+            "PackageIdentifier": "Microsoft.DotNet.SDK.8"
+          },
+          {
+            "PackageIdentifier": "Microsoft.DotNet.SDK.6"
+          },
+          {
+            "PackageIdentifier": "KeeWeb.KeeWeb"
+          },
+          {
+            "PackageIdentifier": "Postman.Postman"
+          },
+          {
+            "PackageIdentifier": "Google.Chrome"
+          },
+          {
+            "PackageIdentifier": "Microsoft.AzureDataStudio"
+          },
+          {
+            "PackageIdentifier": "LINQPad.LINQPad.7"
+          },
+          {
+            "PackageIdentifier": "Microsoft.PowerToys"
+          },
+          {
+            "PackageIdentifier": "Notepad++.Notepad++"
+          },
+          {
+            "PackageIdentifier": "HeidiSQL.HeidiSQL"
+          },
+          {
+            "PackageIdentifier": "XMind.XMind.8"
+          },
+          {
+            "PackageIdentifier": "Spotify.spotify"
+          },
+          {
+            "PackageIdentifier": "OBSProject.OBSStudio"
+          },
+          {
+            "PackageIdentifier": "7zip.7zip"
+          },
+          {
+            "PackageIdentifier": "eza-community.eza"
+          }
+        ],
+        "SourceDetails": {
+        "Argument": "https://winget.azureedge.net/cache",
+        "Identifier": "Microsoft.Winget.Source_8wekyb3d8bbwe",
+        "Name": "winget",
+        "Type": "Microsoft.PreIndexed.Package"
+      }
+      }
+    ]
+}
+        
+
+
+         
