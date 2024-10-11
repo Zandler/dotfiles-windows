@@ -1,13 +1,13 @@
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = 'Stop'
 
-Import-Module Terminal-icons
+#Import-Module Terminal-icons
 
 
 # Improvements 
 Import-Module PSReadLine
 Set-PSReadLineKeyHandler -Key Tab -Function Complete
-Set-PSReadLineOption -PredictionViewStyle ListView
+#Set-PSReadLineOption -PredictionViewStyle ListView
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 

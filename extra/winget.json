@@ -10,6 +10,9 @@
           },
           {
             "PackageIdentifier": "Microsoft.WindowsTerminal"
+            },
+          {
+            "PackageIdentifier": "Helix.Helix"
           },
           {
             "PackageIdentifier": "Microsoft.VisualStudioCode"
@@ -36,9 +39,6 @@
             "PackageIdentifier": "Postman.Postman"
           },
           {
-            "PackageIdentifier": "Google.Chrome"
-          },
-          {
             "PackageIdentifier": "Microsoft.AzureDataStudio"
           },
           {
@@ -52,12 +52,6 @@
           },
           {
             "PackageIdentifier": "HeidiSQL.HeidiSQL"
-          },
-          {
-            "PackageIdentifier": "XMind.XMind.8"
-          },
-          {
-            "PackageIdentifier": "Spotify.spotify"
           },
           {
             "PackageIdentifier": "OBSProject.OBSStudio"

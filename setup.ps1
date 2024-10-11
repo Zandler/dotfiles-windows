@@ -25,25 +25,17 @@ function CheckRequirements
             Exit
     }
     
-    write-host "3. Check Execution Policy" -ForegroundColor DarkCyan
-    Start-Sleep -Seconds 2
-
-    if ((Get-ExecutionPolicy) -ne  "Unrestricted")
-    {
-        Write-Host "Not compliance."
-        write-host "change to Unrestricted" -ForegroundColor DarkGray
-        Start-Sleep -Seconds 3
-        Set-ExecutionPolicy Unrestricted
-    }
-
-    Write-Host "Checked" -ForegroundColor Cyan
-    Start-Sleep -Seconds 3
-    clear
 }
 
 # REGEDIT for change some thing in windows 
 function ConfigWindowsEnvironment 
 {
+    # Terminal icons module
+    Install-Module -Name Terminal-Icons -Repository PSGallery
+    # PSReeadLine
+    Install-Module -Name PSReadLine -Repository PSGallery -Force
+    
+    #REGEDIT
     # Enable long path
     Set-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name 'LongPathsEnabled' -Value 1
 
@@ -130,23 +122,23 @@ function OhMyPosh
     . $PROFILE
             
     # jetbrainsfont 
-    #oh-my-posh font install JetBrainsMono
+    oh-my-posh font install JetBrainsMono
 }
 
 function init-setup
 {
 
-#    CheckRequirements
+    CheckRequirements
 
-#    ConfigWindowsEnvironment   
+    ConfigWindowsEnvironment   
     
-#    WingetInstallTools
+    WingetInstallTools
 
-#    HelixEditor 
+    HelixEditor 
         
     OhMyPosh 
 
-#    InstallWsl
+    InstallWsl
 }
 
 init-setup

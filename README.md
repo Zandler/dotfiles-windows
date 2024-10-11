@@ -5,10 +5,13 @@
 
 ### Requirements
 
+- Local administrador
 - Windows 11 (recomended a clean environment)
 - WinGet
 - Git 
 - Powershell Core 
+
+If you have a fresh windows 11 , you have this requirements. 
 
 
 ### Instructions 
@@ -18,14 +21,20 @@
 
 '''powershell 
 
-winget install -id -e Git.Git
-winget install Microsoft.PowerShell
+# Config Execution Policy
+Set-ExecutionPolicy Unrestricted
+
+# Install software
+winget install -e --id Git.Git
+winget install -e --id Microsoft.PowerShell.Preview
+
 '''
 
 - Clone this repo
+
 '''powershell
 
-git clone https://github.com/Zandler/dotfiles.git
+git clone https://github.com/Zandler/dotfiles-windows.git 
 '''
 
 - Execute setup script 
