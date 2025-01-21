@@ -5,42 +5,31 @@
 
 ### Requirements
 
-- Local administrador
 - Windows 11 (recomended a clean environment)
-- WinGet
 - Git 
-- Powershell Core 
-
-If you have a fresh windows 11 , you have this requirements. 
+- Powershell > 5
 
 
 ### Instructions 
 
-- Update yout system
-- Install dependencies 
-
-'''powershell 
-
-# Config Execution Policy
-Set-ExecutionPolicy Unrestricted
-
-# Install software
-winget install -e --id Git.Git
-winget install -e --id Microsoft.PowerShell.Preview
-
-'''
-
-- Clone this repo
+1. Update yout system
+2. Install dependencies 
+3. Clone this repo
 
 '''powershell
 
 git clone https://github.com/Zandler/dotfiles-windows.git 
+
+cd dotfiles-windows
+.\install.ps1
 '''
 
-- Execute setup script 
-'''powershel
-
-.\dotfiles-windows\setup.ps1 
-'''
-
+This script:
+- Create a foder with name devxp at $HOME 
+- Move some config files inside $HOME\.devxp\config folder (Powershell profile included)
+- Install WSL2 because Rancher desktop needs wsl.
+- Install Scoop
+- Add some buckets to scoop
+- Install apps
+**If you want install more softwares, go to https://scoop.sh/#/apps and search you app. Next add after line 98**
 
