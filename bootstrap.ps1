@@ -145,24 +145,24 @@ Press any key for continue
 
 function SyncConfig {
     
-    write-host "Checking if devxp directory exists..." -ForegroundColor DarkCyan
+    write-host "Starting config environment" -ForegroundColor DarkCyan
     Start-Sleep -Seconds 2
 
     if ( -Not (Test-Path "$PROFILE" )) {
         Write-Host "Creating profile folder and file" -ForegroundColor DarkGreen
-        New-item -ItemType Directory -Path $HOME\Documents   
+        New-item -ItemType Directory -Path $HOME\Documents\WindowsPowerShell   
         Copy-Item $HOME\.dotfiles\config\Microsoft.PowerShell_profile.ps1 -Destination $PROFILE -Force
     }
 
-    Copy-Item $HOME\.ddotfiles\config\helix -Destination $HOME\AppData\Roaming\helix -Force
+    Copy-Item $HOME\.dotfiles\config\helix -Destination $Env:APPDATA\helix -Force
     
     
 }
 
 #InstallWsl # Intall Wsl for SRE - python - node - docker
 SyncConfig # Config files for some apps like helix starship
-InstallScoop # Install scoop
-AddScoopButckets # Add scoop buckets like debian repos
-InstallApps # Install all apps for windows (python, golang, node are inside WSL see: https://github.com/zandler/dotfiles-ubuntu)
+#InstallScoop # Install scoop
+#AddScoopButckets # Add scoop buckets like debian repos
+#InstallApps # Install all apps for windows (python, golang, node are inside WSL see: https://github.com/zandler/dotfiles-ubuntu)
 
 Write-Host "SUCESS. RESTART TERMINAL..." -ForegroundColor DarkCyan
