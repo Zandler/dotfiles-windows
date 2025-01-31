@@ -1,3 +1,20 @@
+# Requirements
+<#
+    .SYNOPSIS
+    Powershell script for install and configure environemnt.
+    
+    .DESCRIPTION
+    Requirements: 
+        Powershell > 5
+        Windows 11
+    Steps:
+        - Install scoop
+        - install git
+        - clone repo
+        - execute bootstrap.ps1
+#>
+
+$ErrorActionPreference = 'SilentlyContinue' 
 
 function InstallScoop {
     try {
@@ -24,15 +41,16 @@ function CloneRepo {
 
     
     Write-Host "Check if .dotfiles exists in '$HOME' " -ForegroundColor DarkCyan
-    if ( -Not (Test-Path "$HOME/.dotfiles" )) {
-        Write-Host "folder not found. Cloning repo..." -ForegroundColor DarkGreen
-        git clone https://github.com/zandler/dotfiles-windows.git $HOME\.dotfiles 
+    if (Test-Path $HOME\.dotfiles) {
+        Write-Host "folder found. Update..." -ForegroundColor DarkGreen
+        cd $HOME\.dotfiles ; git pull
+        Start-Sleep -Seconds 2
+        Clear-Host
     }
-    Start-Sleep -Seconds 2
-    Clear-Host
 
-    Write-Host "Folder found. Updating..."
-    cd $HOME\.dotfiles ; git pull
+    Write-Host "Clone config files at $HOME\.dotfiles ..."
+    git clone https://github.com/zandler/dotfiles-windows.git $HOME\.dotfiles 
+    cd $HOME\.dotfiles ; 
     Start-Sleep -Seconds 2
 }
 
@@ -50,5 +68,8 @@ Start-Sleep -Seconds2
 
 Clear-Host 
 
+CloneRepo
+
 Write-Host "Now, starting all conf" -ForegroundColor DarkCyan
 cd $HOME\.dotfiles; .\bootstrap.ps1
+

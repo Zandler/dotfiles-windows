@@ -81,8 +81,6 @@ function Get-GitBranch {
 }
 
 Set-Variable -Name STARSHIP_CONFIG -Value $HOME\.devxp\starship\starship.toml
-# Create alis to kubectl (kubecolor == kubectl with color)
-Set-Alias -Name kubectl -Value kubecolor
 
 # Starship
 Invoke-Expression (&starship init powershell)
