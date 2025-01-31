@@ -71,5 +71,6 @@ Clear-Host
 CloneRepo
 
 Write-Host "Now, starting all conf" -ForegroundColor DarkCyan
-cd $HOME\.dotfiles; .\bootstrap.ps1
+cd $HOME\.dotfiles       
+.\bootstrap.ps1
 
