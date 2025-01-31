@@ -151,10 +151,11 @@ function SyncConfig {
     if ( -Not (Test-Path "$PROFILE" )) {
         Write-Host "Creating profile folder and file" -ForegroundColor DarkGreen
         New-item -ItemType Directory -Path $HOME\Documents\WindowsPowerShell   
+        Copy-Item $HOME\.dotfiles\config\Microsoft.PowerShell_profile.ps1 -Destination $HOME\DOCUMENTS\WindowsPowerShell\ -Force
         Copy-Item $HOME\.dotfiles\config\Microsoft.PowerShell_profile.ps1 -Destination $PROFILE -Force
     }
 
-    Copy-Item $HOME\.dotfiles\config\helix -Destination $Env:APPDATA\helix -Force
+    Copy-Item $HOME\.dotfiles\config\helix -Destination $Env:APPDATA\helix -Force -Recurse
     
     
 }
