@@ -80,8 +80,7 @@ function Get-GitBranch {
     }
 }
 
-$ENV:STARSHIP_CONFIG = "$HOME\.devxp\starship\starship.toml"
-
+Set-Variable -Name STARSHIP_CONFIG -Value $HOME\.devxp\starship\starship.toml
 # Create alis to kubectl (kubecolor == kubectl with color)
 Set-Alias -Name kubectl -Value kubecolor
 

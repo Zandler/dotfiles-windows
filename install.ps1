@@ -74,8 +74,8 @@ function InstallApps {
         "extras/powertoys",
         "extras/rancher/desktop",
         "main/7zip",
-        "nerd-fonts/FiraCode-NF",
-        "nerd-fonts/FiraCode-NF-Mono",
+        "nerd-fonts/JetBrainsMono-NF",
+        "nerd-fonts/JetBrainsMono-NF-Mono",
         "main/eza",
         "extras/bruno",
         "main/helix",
@@ -155,15 +155,16 @@ function SyncConfig {
 
     Copy-Item .\config -Destination $HOME\.devxp\ -Recurse
 
-    write-host "Creating symbolic links... (all files are locate in $HOME/.devxp)" -ForegroundColor DarkCyan
+    write-host "Copy config files... (all files are locate in $HOME/.devxp)" -ForegroundColor DarkCyan
 
     Copy-Item $HOME\.devxp\helix\* -Destination $HOME\AppData\Roaming\helix\ -Force
     
-    Copy-Item $HOME\.devxp\Microsoft.PowerShell_profile.Ps1 -Destination $PROFILE -Force
+    Copy-Item $HOME\.devxp\Microsoft.PowerShell_profile.ps1 -Destination $PROFILE -Force
     
     
 }
 
+InstallWsl # Intall Wsl for SRE - python - node - docker
 SyncConfig # Config files for some apps like helix starship
 InstallScoop # Install scoop
 AddScoopButckets # Add scoop buckets like debian repos
