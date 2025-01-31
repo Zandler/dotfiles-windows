@@ -162,8 +162,8 @@ function SyncConfig {
 
 #InstallWsl # Intall Wsl for SRE - python - node - docker
 SyncConfig # Config files for some apps like helix starship
-#InstallScoop # Install scoop
-#AddScoopButckets # Add scoop buckets like debian repos
-#InstallApps # Install all apps for windows (python, golang, node are inside WSL see: https://github.com/zandler/dotfiles-ubuntu)
+InstallScoop # Install scoop
+AddScoopButckets # Add scoop buckets like debian repos
+InstallApps # Install all apps for windows (python, golang, node are inside WSL see: https://github.com/zandler/dotfiles-ubuntu)
 
 Write-Host "SUCESS. RESTART TERMINAL..." -ForegroundColor DarkCyan
