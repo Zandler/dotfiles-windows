@@ -14,11 +14,11 @@
 2. Install dependencies 
 3. Run this command  in powershell **(No admin local need.)**
 
-'''powershell
+```powershell
 
 Iwr -Uri https://raw.githubusercontent.com/Zandler/dotfiles-windows/refs/heads/main/install.ps1 -OutFile install.ps1; ./install.ps1
 
-'''
+```
 
 This script:
 - Install scoop
