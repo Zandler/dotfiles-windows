@@ -84,7 +84,6 @@ function InstallApps {
         "nerd-fonts/JetBrainsMono-NF",
         "nerd-fonts/JetBrainsMono-NF-Mono",
         "main/eza",
-        "extras/bruno",
         "main/helix",
         "extras/dbeaver",
         "main/aws",
@@ -96,8 +95,10 @@ function InstallApps {
         "main/omnisharp",
         "main/netcoredbg",
         "versions/dotnet6-sdk",
-        "main/dotnet-sdk"
-        "java/oraclejdk-lts"
+        "main/dotnet-sdk-lts",
+        "java/oraclejdk-lts",
+        "extras/soapui",
+        "extras/postman"
     
     # Update System before install
     scoop update 
