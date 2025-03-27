@@ -1,0 +1,8 @@
+{
+    "buckets": [ "extras", "versions", "nerd-fonts","java"],
+    "apps": [ "main/git", "main/7zip", "main/eza", "main/helix", "main/aws", "main/starship", "main/powershell-yaml", "main/omnisharp", "main/netcoredbg", "extras/gcloud", "extras/googlechrome", "extras/windows-terminal", "extras/vscode", "extras/notepadplusplus", "extras/powertoys",  "extras/terminal-icons", "extras/posh-git", "extras/psreadline", "extras/soapui", "extras/postman", "extras/dbeaver", "versions/dotnet-sdk-lts",  "nerd-fonts/JetBrainsMono-NF", "nerd-fonts/JetBrainsMono-NF-Mono", "java/oraclejdk-lts"]
+      
+  
+  }
+  
+  
