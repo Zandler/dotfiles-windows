@@ -15,7 +15,7 @@
 3. Run this command  in powershell **(No admin local need.)**
 
 ```powershell
-
+ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 Iwr -Uri https://raw.githubusercontent.com/Zandler/dotfiles-windows/refs/heads/main/install.ps1 -OutFile install.ps1; ./install.ps1
 
 ```
