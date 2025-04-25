@@ -48,7 +48,7 @@ function AddScoopButckets {
     $BUCKETS="extras",
             "versions",
             "nerd-fonts"
-            "java"
+
 
     Write-Host "Add buckets" -ForegroundColor DarkCyan
     Start-Sleep -Seconds 3
@@ -92,13 +92,11 @@ function InstallApps {
         "extras/posh-git",
         "extras/psreadline",
         "main/powershell-yaml",
-        "main/omnisharp",
-        "main/netcoredbg",
-        "versions/dotnet6-sdk",
-        "versions/dotnet-sdk-lts",
-        "java/oraclejdk-lts",
         "extras/soapui",
-        "extras/postman"
+        "extras/postman",
+        "main/uv",
+        "main/python"
+
     
     # Update System before install
     scoop update 
