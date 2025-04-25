@@ -95,7 +95,21 @@ function InstallApps {
         "extras/soapui",
         "extras/postman",
         "main/uv",
-        "main/python"
+        "main/python",
+        "main/kubectl",
+        "main/kubect",
+        "main/terraform",
+        "main/terraform-ls",
+        "main/terragrunt",
+        "main/tflint",
+        "main/k9s",
+        "main/go",
+        "main/golangci-lint",
+        "main/azure-cli",
+        "extras/googlechrome",
+        "extras/gcloud",
+        "main/sqlite"
+
 
     
     # Update System before install
@@ -109,7 +123,18 @@ function InstallApps {
 
         scoop install $app
     }
+    Write-Host "Reload powershell" -ForegroundColor DarkCyan
+    . $PROFILE
 }
+
+function GoApps {
+    go install github.com/air-verse/air@latest
+    go install golang.org/x/tools/gopls@latest
+    go install github.com/go-delve/delve/cmd/dlv@latest
+    go install golang.org/x/tools/cmd/goimports@latest
+    go install github.com/nametake/golangci-lint-langserver@latest
+}
+
 function InstallWsl {
     Clear-Host 
     Write-Host "
@@ -144,6 +169,7 @@ Press any key for continue
 
     Write-Host "Sucess!!  high five o/"
 }
+
 
 function SyncConfig {
     
@@ -193,6 +219,9 @@ SyncConfig # Config files for some apps like helix starship
 InstallScoop # Install scoop
 AddScoopButckets # Add scoop buckets like debian repos
 InstallApps # Install all apps for windows (python, golang, node are inside WSL see: https://github.com/zandler/dotfiles-ubuntu)
+GoApps
+
+. $PROFILE 
 
 if (IsAdmin) {
     InstallWsl # Intall Wsl for SRE - python - node - docker
