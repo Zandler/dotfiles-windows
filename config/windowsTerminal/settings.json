@@ -5,6 +5,8 @@
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{0379a20f-347f-461d-b1d7-417a50f9b94f}",
+    "firstWindowPreference": "persistedWindowLayout",
+    "focusFollowMouse": true,
     "keybindings": 
     [
         {
@@ -52,7 +54,10 @@
                 "guid": "{0379a20f-347f-461d-b1d7-417a50f9b94f}",
                 "hidden": false,
                 "name": "SRE-Windows",
-                "tabTitle": "SRE"
+                "opacity": 14,
+                "startingDirectory": "%USERPROFILE%",
+                "tabTitle": "SRE",
+                "useAcrylic": true
             },
             {
                 "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
@@ -112,5 +117,6 @@
             "yellow": "#E0AF68"
         }
     ],
-    "themes": []
+    "themes": [],
+    "useAcrylicInTabRow": true
 }
