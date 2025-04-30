@@ -95,7 +95,6 @@ function InstallApps {
         "extras/soapui",
         "extras/postman",
         "main/uv",
-        "main/python",
         "main/kubectl",
         "main/kubect",
         "main/terraform",
