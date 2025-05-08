@@ -122,8 +122,10 @@ function InstallApps {
 
         scoop install $app
     }
-    Write-Host "Reload powershell" -ForegroundColor DarkCyan
-    . $PROFILE
+    # TODO
+    # Check why profile not loded after install (terminal-icons problem)
+    #Write-Host "Reload powershell" -ForegroundColor DarkCyan
+    #. $PROFILE
 }
 
 function GoApps {
