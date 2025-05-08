@@ -1,5 +1,12 @@
 # DOTFILE-WINDOWS
 
+![](./image.png)
+
+## FEATURES
+- syntax-highlight
+- complete preview
+- some SRE apps such like kubectl, terraform,,,
+
 
 ### **PLEASE, READ THE FILES ! ! !**
 
