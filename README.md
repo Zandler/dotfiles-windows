@@ -31,6 +31,7 @@ This repo contain powershell scripts and conf files. You can configure you envir
 Iwr -Uri https://raw.githubusercontent.com/Zandler/dotfiles-windows/refs/heads/main/install.ps1 -OutFile install.ps1; ./install.ps1
 
 ```
+After, close terminal and open again.  **Voilà**
 
 This script:
 - Install scoop
