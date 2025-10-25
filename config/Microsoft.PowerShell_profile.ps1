@@ -63,7 +63,7 @@ function grb {
 }
 
 function gcm {
-    git coomit -m
+    git commit -m
 }
 
 function Get-GitBranch {

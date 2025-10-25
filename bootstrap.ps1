@@ -95,19 +95,20 @@ function InstallApps {
         "extras/soapui",
         "extras/postman",
         "main/uv",
-        "main/kubectl",
-        "main/kubect",
+        "main/kubecolor",
         "main/terraform",
         "main/terraform-ls",
-        "main/terragrunt",
         "main/tflint",
         "main/k9s",
         "main/go",
         "main/golangci-lint",
         "main/azure-cli",
         "extras/googlechrome",
-        "extras/gcloud",
-        "main/sqlite"
+        "main/sqlite",
+        "versions/windows-terminal-preview",
+        "versions/dotnet-sdk-lts",
+        "extras/rider"
+        
 
 
     
