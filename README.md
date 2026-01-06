@@ -52,6 +52,9 @@ Iwr -Uri https://raw.githubusercontent.com/Zandler/dotfiles-windows/refs/heads/m
 
 After installation, close terminal and open again. **Voilà**
 
+**PS**
+Change in terminal > settings to jetbrains nerdfont NL (already installed)
+
 ![](./img/terminal.png)
 
 This script:
