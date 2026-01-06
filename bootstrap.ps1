@@ -1,6 +1,6 @@
 <#
     .SYNOPSIS
-    Powershell script for install and configure environemnt.
+    Powershell script for install and configure environment.
     
     .DESCRIPTION
     Requirements: 
@@ -8,207 +8,268 @@
         Windows 11
     Steps:
         Install Scoop
-        Add Buckets for scoop (it`s like apt repo)
+        Add Buckets for scoop (it's like apt repo)
         Install some softwares such like git, dotnet, fonts etc...
         Configure for Terminal (nvm, docker, starship)
         Install WSL (Windows subsystem for linux)
     
     PLUS:
-        If you need, go to github.com/zandler/dotfiles-ubuntu and cofnigure wsl with that. 
+        If you need, go to github.com/zandler/dotfiles-ubuntu and configure wsl with that. 
 
     
 #>
 
-$ErrorActionPreference = 'SilentlyContinue' 
+$ErrorActionPreference = 'Stop' 
 
 function InstallScoop {
     try {
         Clear-Host
-        Write-Host "Check Scoop is present" -ForegroundColor DarkCyan
+        Write-Host "Checking if Scoop is present..." -ForegroundColor DarkCyan
         Start-Sleep -Seconds 2
         
-        scoop --version
-
-        Write-Host "Scoop found." -ForegroundColor DarkCyan
+        $null = scoop --version
+        Write-Host "Scoop found." -ForegroundColor DarkGreen
         Start-Sleep -Seconds 2
     }
     catch {
         Clear-Host
-        Write-Host "Scoop not found. Installing ..." -ForegroundColor DarkBlue
+        Write-Host "Scoop not found. Installing..." -ForegroundColor DarkBlue
         Start-Sleep -Seconds 2 
         
-        Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-        Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+        try {
+            Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+            Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+            Write-Host "Scoop installed successfully." -ForegroundColor DarkGreen
+        }
+        catch {
+            Write-Host "Failed to install Scoop: $($_.Exception.Message)" -ForegroundColor Red
+            exit 1
+        }
     }
 }
 
-function AddScoopButckets {
+function AddScoopBuckets {
     Clear-Host
 
-    $BUCKETS="extras",
-            "versions",
-            "nerd-fonts"
+    $BUCKETS = "extras", "versions", "nerd-fonts"
 
+    Write-Host "Adding buckets..." -ForegroundColor DarkCyan
+    Start-Sleep -Seconds 2
 
-    Write-Host "Add buckets" -ForegroundColor DarkCyan
-    Start-Sleep -Seconds 3
-
-    foreach($bucket in $BUCKETS)
-    {
-        Clear-Host
-        Write-Host "Add bucket: "  $bucket  -ForegroundColor DarkCyan
-        Start-Sleep -Seconds 2
-        scoop bucket add $bucket
-
+    foreach($bucket in $BUCKETS) {
+        try {
+            Write-Host "Adding bucket: $bucket" -ForegroundColor DarkCyan
+            scoop bucket add $bucket
+            Write-Host "Bucket '$bucket' added successfully." -ForegroundColor DarkGreen
+        }
+        catch {
+            Write-Host "Failed to add bucket '$bucket': $($_.Exception.Message)" -ForegroundColor Yellow
+        }
+        Start-Sleep -Seconds 1
     }
 
-    Write-Host "Update buckets" -ForegroundColor DarkCyan
-    Start-Sleep -Seconds 3
-    
-    scoop update
+    Write-Host "Updating buckets..." -ForegroundColor DarkCyan
+    try {
+        scoop update
+        Write-Host "Buckets updated successfully." -ForegroundColor DarkGreen
+    }
+    catch {
+        Write-Host "Failed to update buckets: $($_.Exception.Message)" -ForegroundColor Yellow
+    }
 }
 
 function InstallApps {
-
     Clear-Host
 
-    write-host "Installing some softwares (git and some stuff)" -ForegroundColor DarkCyan
-    Start-Sleep -Seconds 3 
+    Write-Host "Installing applications..." -ForegroundColor DarkCyan
+    Start-Sleep -Seconds 2
 
-    $DEFAULT_APPS="extras/dbeaver", 
-    "extras/googlechrome", 
-    "extras/notepadplusplus", 
-    "extras/posh-git", 
-    "extras/postman", 
-    "extras/powertoys", 
-    "extras/psreadline", 
-    "extras/rider", 
-    "extras/soapui", 
-    "extras/terminal-icons", 
-    "extras/vscode", 
-    "main/7zip", 
-    "main/aws", 
-    "main/azure-cli", 
-    "main/eza", 
-    "main/git",
-    "main/go", 
-    "main/golangci-lint", 
-    "main/helix", 
-    "main/k9s", 
-    "main/kubecolor", 
-    "main/powershell-yaml", 
-    "main/sqlite", 
-    "main/starship", 
-    "main/terraform", 
-    "main/terraform-ls", 
-    "main/tflint", 
-    "main/uv", 
-    "nerd-fonts/JetBrainsMono-NF", 
-    "nerd-fonts/JetBrainsMono-NF-Mono", 
-    "versions/dotnet-sdk-lts", 
-    "versions/windows-terminal-preview"
-        
+    $DEFAULT_APPS = @(
+        "extras/dbeaver",                     # Database management tool
+        "extras/googlechrome",                # Web browser
+        "extras/notepadplusplus",             # Text editor
+        "extras/posh-git",                    # Git integration for PowerShell
+        "extras/postman",                     # API testing tool
+        "extras/powertoys",                   # Windows utilities
+        "extras/psreadline",                  # PowerShell command line editing
+        "extras/rider",                       # JetBrains .NET IDE
+        "extras/soapui",                      # SOAP/REST API testing
+        "extras/terminal-icons",              # Terminal file icons
+        "extras/vscode",                      # Visual Studio Code editor
+        "main/7zip",                          # File archiver
+        "main/aws",                           # AWS CLI
+        "main/azure-cli",                     # Azure CLI
+        "main/eza",                           # Modern ls replacement
+        "main/git",                           # Version control system
+        "main/go",                            # Go programming language
+        "main/golangci-lint",                 # Go linter
+        "main/helix",                         # Terminal text editor
+        "main/k9s",   
+        "main/kubectl",                        # Kubernetes CLI manager
+        "main/kubecolor",                     # Colorized kubectl output
+        "main/powershell-yaml",               # YAML support for PowerShell
+        "main/sqlite",                        # SQLite database engine
+        "main/starship",                      # Cross-shell prompt
+        "main/terraform",                     # Infrastructure as code
+        "main/terraform-ls",                  # Terraform language server
+        "main/tflint",                        # Terraform linter
+        "main/uv",                            # Python package installer
+        "nerd-fonts/JetBrainsMono-NF",        # Programming font
+        "nerd-fonts/JetBrainsMono-NF-Mono",   # Monospace programming font
+        "versions/dotnet-sdk-lts",            # .NET SDK LTS version
+        "versions/windows-terminal-preview"   # Windows Terminal preview
+    )
 
-
-    
-    # Update System before install
-    scoop update 
-
-    foreach($app in $DEFAULT_APPS)
-    {
-        Clear-Host
-        Write-Host "Installing app: "  $app  -ForegroundColor DarkCyan
-        Start-Sleep -Seconds 3
-
-        scoop install $app
+    try {
+        scoop update
     }
-    # TODO
-    # Check why profile not loded after install (terminal-icons problem)
-    #Write-Host "Reload powershell" -ForegroundColor DarkCyan
-    #. $PROFILE
+    catch {
+        Write-Host "Failed to update Scoop: $($_.Exception.Message)" -ForegroundColor Yellow
+    }
+
+    $failed = @()
+    foreach($app in $DEFAULT_APPS) {
+        try {
+            Write-Host "Installing: $app" -ForegroundColor DarkCyan
+            scoop install $app
+            Write-Host "Successfully installed: $app" -ForegroundColor DarkGreen
+        }
+        catch {
+            Write-Host "Failed to install '$app': $($_.Exception.Message)" -ForegroundColor Yellow
+            $failed += $app
+        }
+        Start-Sleep -Seconds 1
+    }
+    
+    if ($failed.Count -gt 0) {
+        Write-Host "Failed installations: $($failed -join ', ')" -ForegroundColor Yellow
+    }
 }
 
 function GoApps {
-    go install github.com/air-verse/air@latest
-    go install golang.org/x/tools/gopls@latest
-    go install github.com/go-delve/delve/cmd/dlv@latest
-    go install golang.org/x/tools/cmd/goimports@latest
-    go install github.com/nametake/golangci-lint-langserver@latest
+    try {
+        $null = go version
+        Write-Host "Installing Go packages..." -ForegroundColor DarkCyan
+        
+        $goPackages = @(
+            "github.com/air-verse/air@latest",
+            "golang.org/x/tools/gopls@latest",
+            "github.com/go-delve/delve/cmd/dlv@latest",
+            "golang.org/x/tools/cmd/goimports@latest",
+            "github.com/nametake/golangci-lint-langserver@latest"
+        )
+        
+        foreach($package in $goPackages) {
+            try {
+                Write-Host "Installing Go package: $package" -ForegroundColor DarkCyan
+                go install $package
+                Write-Host "Successfully installed: $package" -ForegroundColor DarkGreen
+            }
+            catch {
+                Write-Host "Failed to install '$package': $($_.Exception.Message)" -ForegroundColor Yellow
+            }
+        }
+    }
+    catch {
+        Write-Host "Go not found. Skipping Go packages installation." -ForegroundColor Yellow
+    }
 }
 
 function InstallWsl {
     Clear-Host 
-    Write-Host "
-I need to remove Ubuntu distro. All data will erased.
-Continue? ( Y/n)" -ForegroundColor DarkCyan
+    Write-Host "WSL Ubuntu installation will remove existing Ubuntu distro." -ForegroundColor DarkCyan
+    Write-Host "All data will be erased. Continue? (Y/n)" -ForegroundColor DarkCyan
     $select = Read-Host
 
-    while ($select -ne "Y" )
-    {
-        Write-Host "You desagree. Exiting"
-        Start-Sleep -Seconds 2
+    if ($select -ne "Y") {
+        Write-Host "Installation cancelled." -ForegroundColor Yellow
         return
     }
 
-    wsl --unregister Ubuntu
-    wsl --set-default-version 2
+    try {
+        # Check if Ubuntu exists before unregistering
+        $wslList = wsl --list --quiet 2>$null
+        if ($wslList -match "Ubuntu") {
+            Write-Host "Removing existing Ubuntu distro..." -ForegroundColor DarkCyan
+            wsl --unregister Ubuntu
+        }
+        
+        wsl --set-default-version 2
+        Write-Host "Installing WSL Ubuntu..." -ForegroundColor DarkCyan
+        
+        Write-Host "When WSL install finishes, setup username and password." -ForegroundColor DarkCyan
+        Write-Host "After setup, type 'exit' to leave WSL." -ForegroundColor DarkCyan
+        Write-Host "Visit https://github.com/zandler/dotfiles-ubuntu for Linux config." -ForegroundColor DarkCyan
+        Write-Host "Press any key to continue..." -ForegroundColor DarkCyan
+        Read-Host
 
-    Write-Host "WSL removed" -ForegroundColor Darkcyan
-    Start-Sleep -Seconds 2
-    Clear-Host
-    write-host "
-When WSL install finish you need to setup username and password.
-Create your username and password, after, input 'exit' for leave wsl. 
-Don't worry after exit bash and finish all powershell process,
-go to https://github.com/zandler/dotfiles-ubuntu
-Press any key for continue
-"  -ForegroundColor Darkcyan
-    
-    Read-Host
-
-    wsl --install -d Ubuntu 
-
-    Write-Host "Sucess!!  high five o/"
+        wsl --install -d Ubuntu
+        Write-Host "WSL Ubuntu installation completed!" -ForegroundColor DarkGreen
+    }
+    catch {
+        Write-Host "Failed to install WSL: $($_.Exception.Message)" -ForegroundColor Red
+    }
 }
 
 
 function SyncConfig {
-    
-    write-host "Starting config environment" -ForegroundColor DarkCyan
+    Write-Host "Starting configuration sync..." -ForegroundColor DarkCyan
     Start-Sleep -Seconds 2
 
-    if ( -Not (Test-Path "$PROFILE" )) {
-        Write-Host "Creating profile folder and file" -ForegroundColor DarkGreen
-        New-item -ItemType Directory -Path $HOME\Documents\WindowsPowerShell   
+    # Create PowerShell profile directory if needed
+    $profileDir = Split-Path $PROFILE -Parent
+    if (-Not (Test-Path $profileDir)) {
+        Write-Host "Creating PowerShell profile directory..." -ForegroundColor DarkGreen
+        New-Item -ItemType Directory -Path $profileDir -Force
     }
 
-    if ( -Not (Test-Path "$HOME\.config")) {
-        write-host "Creating folder .config in $HOME"
-        New-Item -ItemType Directory -Path $HOME\config
+    # Create .config directory
+    if (-Not (Test-Path "$HOME\.config")) {
+        Write-Host "Creating .config folder in $HOME" -ForegroundColor DarkGreen
+        New-Item -ItemType Directory -Path "$HOME\.config" -Force
     }
 
-    # Porwershell profile 
-    Copy-Item $HOME\.dotfiles\config\Microsoft.PowerShell_profile.ps1 -Destination $HOME\DOCUMENTS\WindowsPowerShell\ -Force
-    # Powershell ISE Profile
-    Copy-Item $HOME\.dotfiles\config\Microsoft.PowerShell_profile.ps1 -Destination $PROFILE -Force
-    # Startship preset
-    Copy-Item $HOME\.dotfiles\config\starship\starship.toml $HOME\.config\starship.toml
-    # Helix Editor profile
-    Copy-Item $HOME\.dotfiles\config\helix -Destination $Env:APPDATA\helix -Force -Recurse
- 
+    try {
+        # PowerShell profile
+        if (Test-Path "$HOME\.dotfiles\config\Microsoft.PowerShell_profile.ps1") {
+            Copy-Item "$HOME\.dotfiles\config\Microsoft.PowerShell_profile.ps1" -Destination $PROFILE -Force
+            Write-Host "PowerShell profile synced." -ForegroundColor DarkGreen
+        }
+        
+        # Starship preset
+        if (Test-Path "$HOME\.dotfiles\config\starship\starship.toml") {
+            Copy-Item "$HOME\.dotfiles\config\starship\starship.toml" -Destination "$HOME\.config\starship.toml" -Force
+            Write-Host "Starship config synced." -ForegroundColor DarkGreen
+        }
+        
+        # Helix Editor profile
+        if (Test-Path "$HOME\.dotfiles\config\helix") {
+            Copy-Item "$HOME\.dotfiles\config\helix" -Destination "$Env:APPDATA\helix" -Force -Recurse
+            Write-Host "Helix config synced." -ForegroundColor DarkGreen
+        }
+    }
+    catch {
+        Write-Host "Failed to sync some configs: $($_.Exception.Message)" -ForegroundColor Yellow
+    }
 }
 
 function IsAdmin {
-    # Verifica se o script está sendo executado com privilégios de administrador local
-    $adminGroup = [System.Security.Principal.WindowsBuiltInRole]::Administrator
-    $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent()
-    $isAdmin = $currentUser.Groups -match "S-1-5-32-544"  # SID do grupo "Administradores"
-
-    if ($isAdmin) {
-        Write-Host "You'r local admin. "
-    } else {
-        Write-Host "You are not admin local. Skip Install WSL "
-    Exit
+    try {
+        $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent()
+        $principal = New-Object Security.Principal.WindowsPrincipal($currentUser)
+        $isAdmin = $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+        
+        if ($isAdmin) {
+            Write-Host "Running as administrator." -ForegroundColor DarkGreen
+            return $true
+        } else {
+            Write-Host "Not running as administrator. WSL installation will be skipped." -ForegroundColor Yellow
+            return $false
+        }
+    }
+    catch {
+        Write-Host "Failed to check admin privileges: $($_.Exception.Message)" -ForegroundColor Yellow
+        return $false
     }
 }
 
@@ -216,16 +277,25 @@ function IsAdmin {
 #   SCRIPT START HERE   #
 #########################
 
-SyncConfig # Config files for some apps like helix starship
 InstallScoop # Install scoop
-AddScoopButckets # Add scoop buckets like debian repos
-InstallApps # Install all apps for windows (python, golang, node are inside WSL see: https://github.com/zandler/dotfiles-ubuntu)
-GoApps
+AddScoopBuckets # Add scoop buckets
+InstallApps # Install applications
+GoApps # Install Go packages
+SyncConfig # Sync configuration files
 
-. $PROFILE 
-
-if (IsAdmin) {
-    InstallWsl # Intall Wsl for SRE - python - node - docker
+# Load profile if it exists
+if (Test-Path $PROFILE) {
+    try {
+        . $PROFILE
+        Write-Host "PowerShell profile loaded." -ForegroundColor DarkGreen
+    }
+    catch {
+        Write-Host "Failed to load profile: $($_.Exception.Message)" -ForegroundColor Yellow
+    }
 }
 
-Write-Host "SUCESS. RESTART TERMINAL..." -ForegroundColor DarkCyan
+if (IsAdmin) {
+    InstallWsl # Install WSL
+}
+
+Write-Host "SUCCESS! Please restart your terminal." -ForegroundColor DarkGreen

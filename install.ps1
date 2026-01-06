@@ -1,7 +1,6 @@
-# Requirements
 <#
     .SYNOPSIS
-    Powershell script for install and configure environemnt.
+    Powershell script for install and configure environment.
     
     .DESCRIPTION
     Requirements: 
@@ -14,63 +13,104 @@
         - execute bootstrap.ps1
 #>
 
-$ErrorActionPreference = 'SilentlyContinue' 
+$ErrorActionPreference = 'Stop'
 
 function InstallScoop {
     try {
         Clear-Host
-        Write-Host "Check Scoop is present" -ForegroundColor DarkCyan
+        Write-Host "Checking if Scoop is present..." -ForegroundColor DarkCyan
         Start-Sleep -Seconds 2
         
-        scoop --version
-
-        Write-Host "Scoop found." -ForegroundColor DarkCyan
+        $null = scoop --version
+        Write-Host "Scoop found." -ForegroundColor DarkGreen
         Start-Sleep -Seconds 2
     }
     catch {
         Clear-Host
-        Write-Host "Scoop not found. Installing ..." -ForegroundColor DarkBlue
+        Write-Host "Scoop not found. Installing..." -ForegroundColor DarkBlue
         Start-Sleep -Seconds 2 
         
-        Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-        Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+        try {
+            Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+            Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+            Write-Host "Scoop installed successfully." -ForegroundColor DarkGreen
+        }
+        catch {
+            Write-Host "Failed to install Scoop: $($_.Exception.Message)" -ForegroundColor Red
+            exit 1
+        }
     }
 }
 
 function CloneRepo {
-
+    Write-Host "Checking if .dotfiles exists in '$HOME'..." -ForegroundColor DarkCyan
     
-    Write-Host "Check if .dotfiles exists in '$HOME' " -ForegroundColor DarkCyan
     if (Test-Path $HOME\.dotfiles) {
-        Write-Host "folder found. Update..." -ForegroundColor DarkGreen
-        cd $HOME\.dotfiles ; git pull
-        Start-Sleep -Seconds 2
-        Clear-Host
+        Write-Host "Folder found. Updating..." -ForegroundColor DarkGreen
+        try {
+            Set-Location $HOME\.dotfiles
+            git pull
+            Write-Host "Repository updated successfully." -ForegroundColor DarkGreen
+        }
+        catch {
+            Write-Host "Failed to update repository: $($_.Exception.Message)" -ForegroundColor Red
+            exit 1
+        }
     }
-
-    Write-Host "Clone config files at $HOME\.dotfiles ..."
-    git clone https://github.com/zandler/dotfiles-windows.git $HOME\.dotfiles 
-    cd $HOME\.dotfiles ; 
+    else {
+        Write-Host "Cloning config files to $HOME\.dotfiles..." -ForegroundColor DarkCyan
+        try {
+            git clone https://github.com/zandler/dotfiles-windows.git $HOME\.dotfiles
+            Write-Host "Repository cloned successfully." -ForegroundColor DarkGreen
+        }
+        catch {
+            Write-Host "Failed to clone repository: $($_.Exception.Message)" -ForegroundColor Red
+            exit 1
+        }
+    }
+    
     Start-Sleep -Seconds 2
 }
 
+######################
+# SCRIPT STARTS HERE #
+######################
+
 Clear-Host
 
-write-host "Installing Scoop..." -foregroundcolor darkcyan
+Write-Host "Installing Scoop..." -ForegroundColor DarkCyan
 InstallScoop
 Start-Sleep -Seconds 2
 
 Clear-Host
-
-Write-Host "Installing Git" 
-scoop install main/git
-Start-Sleep -Seconds2
+Write-Host "Installing Git..." -ForegroundColor DarkCyan
+try {
+    scoop install main/git
+    Write-Host "Git installed successfully." -ForegroundColor DarkGreen
+}
+catch {
+    Write-Host "Failed to install Git: $($_.Exception.Message)" -ForegroundColor Red
+    exit 1
+}
+Start-Sleep -Seconds 2
 
 Clear-Host 
-
 CloneRepo
 
-Write-Host "Now, starting all conf" -ForegroundColor DarkCyan
-Set-Location -Path $HOME\.dotfiles       
-.\bootstrap.ps1
+Write-Host "Starting configuration..." -ForegroundColor DarkCyan
+Set-Location -Path $HOME\.dotfiles
 
+if (Test-Path ".\bootstrap.ps1") {
+    try {
+        .\bootstrap.ps1
+        Write-Host "Configuration completed successfully!" -ForegroundColor DarkGreen
+    }
+    catch {
+        Write-Host "Failed to execute bootstrap.ps1: $($_.Exception.Message)" -ForegroundColor Red
+        exit 1
+    }
+}
+else {
+    Write-Host "bootstrap.ps1 not found in the repository!" -ForegroundColor Red
+    exit 1
+}
