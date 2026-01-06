@@ -1,6 +1,13 @@
 # DOTFILES-WINDOWS
 
-![](./image.png)
+![](./img/terminal.png)
+This is look like when finish 
+
+![](./img/terminal-predict.png)
+Terminal auto complete with history
+
+![](./img/hx-complete.png)
+Helix editor with full features to golang, python 
 
 ## FEATURES
 - Syntax highlighting
@@ -9,6 +16,17 @@
 - Git aliases and shortcuts
 - Kubernetes aliases with kubecolor
 - Modern terminal experience with Starship prompt
+
+### Gopher users
+**air** for local development restart after save
+
+### Python
+**uv** for management environment and packages
+
+### SRE`s
+Kubecolor 
+
+and other stuff's
 
 ### **PLEASE, READ THE FILES ! ! !**
 
@@ -34,6 +52,8 @@ Iwr -Uri https://raw.githubusercontent.com/Zandler/dotfiles-windows/refs/heads/m
 
 After installation, close terminal and open again. **Voilà**
 
+![](./img/terminal.png)
+
 This script:
 - Installs Scoop package manager
 - Installs Git
@@ -43,6 +63,8 @@ This script:
 - Installs WSL (if you are local admin, otherwise skips this step)
 
 **If you want to see or install more software, go to https://scoop.sh/#/apps and search for your app.**
+
+after, open bootstrap.ps1 at line 87 and add your package 
 
 After execution, install WSL:
 

@@ -18,62 +18,61 @@ try {
     Write-Warning "PSReadLine module not found. Install with: scoop install extras/psreadline"
 }
 
-# LOAD ALIAS 
+# File System Functions (need specific parameters)
 function ls {
-    eza -lbGd --header --git --sort=modified --color=always --group-directories-first --icons
+    eza -lbGd --header --git --sort=modified --color=always --group-directories-first --icons $args
 }
 
 function ll {
-    eza --tree --level=2 --color=always --group-directories-first --icons
+    eza --tree --level=2 --color=always --group-directories-first --icons $args
 }
 
+# Git Functions (need specific parameters)
 function ga {
-    git add .
+    git add . $args
 }
 
 function gca {
-    git commit --amend --verbose
+    git commit --amend --verbose $args
 }
 
 function gco {
-    git checkout
+    git checkout $args
 }
 
 function gcob {
-    git checkout -b
-}
-
-# List local branchs sort by last modified 
-function glbm {
-    git for-each-ref --sort=-committerdate --format='%(refname:short) %09 %(committerdate:relative)' refs/heads/
-}
-
-# git list remote branchs sorted by last modified
-function glbmr {
-    git for-each-ref --sort=-committerdate --format='%(refname:short) %09 %(committerdate:relative)' refs/remotes/
+    git checkout -b $args
 }
 
 function gs {
-    git status -sb
+    git status -sb $args
 }
 
 function gl {
-    git log --oneline
+    git log --oneline $args
 }
 
 function glc {
-    git log -1 HEAD --stat
+    git log -1 HEAD --stat $args
 }
 
 function grb {
-    git branch -r -v
+    git branch -r -v $args
 }
 
 function gcm {
-    git commit -m
+    git commit -m $args
 }
 
-# Kubernetes aliases using kubecolor
+function glbm {
+    git for-each-ref --sort=-committerdate --format='%(refname:short) %09 %(committerdate:relative)' refs/heads/ $args
+}
+
+function glbmr {
+    git for-each-ref --sort=-committerdate --format='%(refname:short) %09 %(committerdate:relative)' refs/remotes/ $args
+}
+
+# Kubernetes Functions (need specific parameters)
 function k {
     kubecolor $args
 }
@@ -139,13 +138,14 @@ function kd {
 }
 
 function kgc {
-    kubecolor config get-contexts
+    kubecolor config get-contexts $args
 }
 
 function kcc {
     kubecolor config use-context $args
 }
 
+# Utility Function
 function Get-GitBranch {
     param(
         [string]$RepositoryPath = (Get-Location).Path
