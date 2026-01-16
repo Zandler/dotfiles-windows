@@ -108,6 +108,7 @@ function InstallApps {
         "main/kubectl",                        # Kubernetes CLI manager
         "main/kubecolor",                     # Colorized kubectl output
         "main/powershell-yaml",               # YAML support for PowerShell
+        "main/pwsh"                            # powreshell 7
         "main/sqlite",                        # SQLite database engine
         "main/starship",                      # Cross-shell prompt
         "main/terraform",                     # Infrastructure as code
